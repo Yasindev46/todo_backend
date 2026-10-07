@@ -1,21 +1,29 @@
 import express from 'express';
-import cors from "cors"
+import cors from 'cors';
+import { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import todoRoutes from './routes/todo.routes.js';
 import connectDB from './config/db.js';
 
-await connectDB();
-
-const app=express();
-const PORT=process.env.PORT||3009;
+const app = express();
+const PORT = process.env.PORT || 3009;
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use('/api',todoRoutes);
+app.use('/api', todoRoutes);
 
-// Start the server
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+await connectDB();
+
+export default app;
+
+const isDirectRun = process.argv[1]
+    && fileURLToPath(import.meta.url) === resolve(process.argv[1]);
+
+if (isDirectRun) {
+    app.listen(PORT, () => {
+        console.log(`Server is running on http://localhost:${PORT}`);
+    });
+}
