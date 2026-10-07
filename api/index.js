@@ -3,7 +3,6 @@
 import express from 'express';
 import cors from "cors"
 import connectDB from '../config/db.js';
-// import route from './routes/todoRoutes.js';
 import route from "../routes/todoRoutes.js"
 
 await connectDB();
