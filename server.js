@@ -1,9 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { resolve } from "node:path";
-import { fileURLToPath } from "node:url";
-import todoRoutes from "./routes/todo.routes.js";
-import connectDB from "./config/db.js";
+
 
 const app = express();
 const PORT = process.env.PORT || 3009;
@@ -13,9 +10,14 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use("/api", todoRoutes);
+app.get("/", (req, res) => {
+  res.send("Welcome to the Todo List API!");
+});
 
-await connectDB();
+app.get("/about", (req, res) => {
+  res.send("About Us");
+});
+
 
 export default app;
 
